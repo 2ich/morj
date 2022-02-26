@@ -540,7 +540,7 @@
         })
 
         area.addEventListener('keyup', function(e) {
-            socket.emit('area value', area.value)
+            socket.emit('area-value', area.value)
 
             divchange(+1)
         })
@@ -722,7 +722,7 @@
             displayUsers(usrs_onln)
         })
 
-        socket.on('area value and msges', function(area_value, msges) {
+        socket.on('area-value-and-msges', function(area_value, msges) {
             console.log('client area value receive')
             var area = document.getElementById('textarea')
             area.value = area_value
@@ -730,6 +730,12 @@
             clientmsges.forEach((m) => {
                 displayMessage(m)
             })
+        })
+
+        socket.on('area-value', (area_value) => {
+            console.log('client area value receive')
+            var area = document.getElementById('textarea')
+            area.value = area_value
         })
 
         socket.on('divc-change', function(divcount) {

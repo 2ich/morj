@@ -121,7 +121,7 @@ io.on('connection', (socket) => {
     users_online.push(socket.id)
     io.emit('user connected', users_online)
     // io.emit('area value and msges', area_value_server, msges)
-    io.to(socket.id).emit('area value and msges', area_value_server, msges)
+    io.to(socket.id).emit('area-value-and-msges', area_value_server, msges)
     console.log('OBJECT.KEYS(SYROOMS) ' + Object.keys(rooms))
     io.emit('rooms', Object.keys(rooms))
     
@@ -236,11 +236,11 @@ io.on('connection', (socket) => {
         socket.to(room).emit('audio', 'cave')
     })
 
-    socket.on('area value', (area_value) => {
+    socket.on('area-value', (area_value) => {
         // broadcast? can i? yeah i can now
         area_value_server = area_value
         console.log(area_value)
-        socket.broadcast.emit('area value', area_value)
+        socket.broadcast.emit('area-value', area_value)
     })
 
     socket.on('divc-change', (dif) => {
