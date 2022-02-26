@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sockc</title>
+    <title>ubermorj!nal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 
@@ -12,8 +12,9 @@
         }
 
         body {
-            margin: 44px;
+            margin: 50px;
             /* margin: 16px; */
+            font-size: 18px;
         }
 
         .container {
@@ -87,9 +88,12 @@
         textarea {
             border:1px solid #666;
             width:100%;
-            height:150px;
+            height:240px;
             margin:5px 0;
-            padding:0px;
+            /* padding:0px; */
+            padding: 8px;
+            font-size: 16px;
+
         }
 
         #divc {
@@ -147,6 +151,15 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        .noscrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .noscrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         #gamechat {
             height: 420px;
             /*width: calc(90% - 20px);*/
@@ -310,7 +323,7 @@
         <input id="roomin" autocomplete="off" /><button>Join</button>
         </form>
 
-        <textarea id='textarea' placeholder="ʅTEXTAREAʅTEXTAREA" focus>&equiv;Te&times;tar&euml;&aacute;</textarea>
+        <textarea id='textarea' placeholder="ʅTEXTAREAʅTEXTAREA" autofocus class="noscrollbar">&equiv;Te&times;tar&euml;&aacute;</textarea>
         
         <div id='divc' onclick='divchange(+1)' class="disable-select">
             <h2>DIVC</h2>
@@ -526,13 +539,22 @@
         })
 
         //area.addEventListener('wheel', divchange(+1));
-        area.addEventListener('wheel', (e) => {
-                e.preventDefault()
-                //divc.innerHTML = `<h2>${divc_client - 1}</h2>`
-                //socket.emit('divc-change', -1)
-                divchange(-1)
+
+
+
+
+
+        // area.addEventListener('wheel', (e) => {
+        //         e.preventDefault()
+        //         //divc.innerHTML = `<h2>${divc_client - 1}</h2>`
+        //         //socket.emit('divc-change', -1)
+        //         divchange(-1)
             
-        })
+        // })
+
+
+
+
 
         function rint(min = 0, max) {
             return min + Math.floor(Math.random() * (max + 1 - min));
