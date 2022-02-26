@@ -141,11 +141,11 @@ io.on('connection', (socket) => {
         // io.emit('chat message', msg) - to ALL users including sender
         // to all EXCEPT sender
 
-        msges.push(msg)
-        console.log(msges)
 
         if (room === '') {
             socket.broadcast.emit('chat message', msg)
+            msges.push(msg)
+            console.log(msges)
         } else {
             socket.to(room).emit('chat message', msg)
         }
