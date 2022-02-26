@@ -19,7 +19,8 @@ app.get('/goat', (req, res) => {
 
 var users_online = []
 var osers = {}
-var area_value_server = 'ʅTEXTAREA\nʅTEXTAREA'
+var area_value_server = ''
+// var area_value_server = ''
 var divcount = 0
 
 function arrayRemove(arr, value) { 
