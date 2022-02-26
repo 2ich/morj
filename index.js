@@ -23,6 +23,8 @@ var area_value_server = ''
 // var area_value_server = ''
 var divcount = 0
 
+var msges = []
+
 function arrayRemove(arr, value) { 
 
     return arr.filter(function(ele){ 
@@ -118,7 +120,8 @@ io.on('connection', (socket) => {
     // to rewrite
     users_online.push(socket.id)
     io.emit('user connected', users_online)
-    io.emit('area value', area_value_server)
+    // io.emit('area value and msges', area_value_server, msges)
+    io.to(socket.id).emit('area value and msges', area_value_server, msges)
     console.log('OBJECT.KEYS(SYROOMS) ' + Object.keys(rooms))
     io.emit('rooms', Object.keys(rooms))
     
@@ -137,6 +140,10 @@ io.on('connection', (socket) => {
     socket.on('chat message', (msg, room = '') => {
         // io.emit('chat message', msg) - to ALL users including sender
         // to all EXCEPT sender
+
+        msges.push(msg)
+        console.log(msges)
+
         if (room === '') {
             socket.broadcast.emit('chat message', msg)
         } else {

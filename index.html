@@ -88,7 +88,7 @@
         textarea {
             border:1px solid #666;
             width:100%;
-            height:240px;
+            height:160px;
             margin:5px 0;
             /* padding:0px; */
             padding: 8px;
@@ -97,8 +97,8 @@
         }
 
         #divc {
-            width: 300px;
-            height: 200px;
+            width: 250px;
+            height: 150px;
             background-color: rgb(228, 228, 228);
             border: 2px solid #000;
             margin: 5px;
@@ -136,7 +136,7 @@
         }
         
         .scrollNoBar {
-            height: 200px;
+            height: 300px;
             overflow-y: scroll;
             /*
             overflow: hidden;
@@ -316,17 +316,19 @@
         </div>
 
         <form id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
+        <input id="input" autocomplete="off" autofocus/><button>Send</button>
         </form>
 
         <form id="roominform" action="">
         <input id="roomin" autocomplete="off" /><button>Join</button>
         </form>
 
-        <textarea id='textarea' placeholder="ʅTEXTAREAʅTEXTAREA" autofocus class="noscrollbar">&equiv;Te&times;tar&euml;&aacute;</textarea>
+        <textarea id='textarea' placeholder="ʅTEXTAREAʅTEXTAREA" class="noscrollbar">&equiv;Te&times;tar&euml;&aacute;</textarea>
         
         <div id='divc' onclick='divchange(+1)' class="disable-select">
-            <h2>DIVC</h2>
+            <h2>
+                <br>
+            </h2>
             <p>Click me?</p>
         </div>
 
@@ -372,6 +374,7 @@
         var curoom = ''
         var isrevealed = false
         var usernameclient = ''
+        var clientmsges = []
 
         var sfx = {
             'hurt' : new Audio('server-assets/audio/hurt.mp3'),
@@ -499,15 +502,18 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault()
             if (input.value) {
-                var item = document.createElement('li')
-                item.textContent = input.value
-                messages.appendChild(item)
+                // var item = document.createElement('li')
+                // item.textContent = input.value
+                // messages.appendChild(item)
+                
+                displayMessage(input.value)
+                
 
                 socket.emit('chat message', input.value, roomin.value)
                 input.value = ''
 
+                // chatfield.scrollTo(0, chatfield.scrollHeight)
             }
-            chatfield.scrollTo(0, chatfield.scrollHeight)
         })
 
         formAuth.addEventListener('submit', e => {
@@ -613,8 +619,19 @@
         }
 
         function displayMessage(msg) {
+
             var item = document.createElement('li')
-            item.textContent = msg
+
+            if (msg.includes('://')) {
+                var linq = document.createElement('a')
+                linq.textContent = msg
+                linq.href = msg
+                item.appendChild(linq)
+            }
+            else {
+                item.textContent = msg
+            }
+
             messages.appendChild(item)
             //window.scrollTo(0, document.body.scrollHeight)
             chatfield.scrollTo(0, chatfield.scrollHeight)
@@ -690,20 +707,28 @@
         
         socket.on('user connected', function(usrs_onln) {
             console.log('client user connected function')
-            displayMessage(`User ${usrs_onln.slice(-1)} has connected`)
+
+            // displayMessage(`User ${usrs_onln.slice(-1)} has connected`)
+
             displayUsers(usrs_onln)
         })
 
         socket.on('user disconnected', function(usrs_onln, discuser) {
             console.log('client user disconneced function')
-            displayMessage(`User ${discuser} has disconnected`)
+
+            // displayMessage(`User ${discuser} has disconnected`)
+            
             displayUsers(usrs_onln)
         })
 
-        socket.on('area value', function(area_value) {
+        socket.on('area value and msges', function(area_value, msges) {
             console.log('client area value receive')
             var area = document.getElementById('textarea')
             area.value = area_value
+            clientmsges = msges
+            clientmsges.forEach((m) => {
+                displayMessage(m)
+            })
         })
 
         socket.on('divc-change', function(divcount) {
